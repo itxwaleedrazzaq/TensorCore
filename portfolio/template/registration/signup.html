@@ -1,0 +1,50 @@
+{% extends "source/nav.html" %}
+{% load static %}
+
+{% block head_block%}
+<title>Signup</title>
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock%}
+
+{% block block_body %}
+
+{% if reg%}
+<h1>Thank you for registration!</h1>
+{% else %}
+
+    <div class="login-container">
+        <form class="login-form"  method="POST" action="{% url 'signup'%}">
+            <h1>Please Enter your details to Signup!</h1>
+            <h2>Have account? Click <a href="{%url 'login'%}"> here</a> to login!</h2>
+            <table>
+                <tr>
+                    <td><label for="username"><h2>Username</h2></label></td>
+                    <td>{{userform.username}}</td>
+                </tr>
+                <tr>
+                    <td><label for="first_name"><h2>First Name</h2></label></td>
+                    <td>{{userform.first_name}}</td>
+                </tr>
+                <tr>
+                    <td><label for="last_name"><h2>Last Name</h2></label></td>
+                    <td>{{userform.last_name}}</td>
+                </tr>
+                <tr>
+                    <td><label for="email"><h2>Email</h2></label></td>
+                    <td>{{userform.email}}</td>
+                </tr>
+                <tr>
+                    <td><label for="password"><h2>Password</h2></label></td>
+                    <td>{{userform.password}}</td>
+                </tr>
+            </table>
+            {% csrf_token %}
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+
+{% endif %}
+
+
+
+{% endblock %}

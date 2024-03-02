@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/category_list.css'%}">
+  <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+  <title>Portfolio</title>
+</head>
+
+<body>
+  <nav>
+    <ul>
+      <li><a href="{% url 'home'%}"><img src="{% static 'images/logo.png' %}" alt="Logo" style="width: 70px; height: 70px; margin-top: 8px;"></a> </li>
+      {% for category in categories %}
+        <h4><a href="#" onclick="toggleContent('{{ category|lower }}')">{{ category }}</a></h4>
+      {% endfor %}
+    </ul>
+  </nav>
+  <div class="gradient"></div>
+
+
+  <!-- Here it shows the detailed content -->
+
+  <style>
+    .project-item {
+        width: calc(48% - 120px); /* Adjust the width as needed */
+        margin: 1% 60px 1% 60px; /* Adjust the margin as needed */
+        float: left;
+        box-sizing: border-box;
+    }
+  
+    /* Clear the float to prevent layout issues */
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+  </style>
+
+<!-- ... (previous HTML code) ... -->
+
+{% for category in categories %}
+    <div id="{{ category|lower }}" class="content" style="display: none;">
+        <h2 align="center">{{ category }}</h2>
+        <div class="clearfix">
+            {% for project in category.projects.all %}
+                <div class="project-item">
+                    <h3>Title: {{ project.title }}</h3>
+                    <p>{{ project.abstract }}</p>
+                    <p>Code is available <a href="{{ project.codelink }}">here</a>.</p>
+                    <p>Publish Date: {{ project.publish_date }}</p> <!-- Add this line for debugging -->
+                    {% if user.is_superuser%}
+                    <a href="{% url 'portfolio:update_project' pk=project.pk %}"><button>Update</button></a>
+                    <a href="{% url 'portfolio:delete_project' pk=project.pk %}"><button>Delete</button></a>
+                    <br>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+
+<!-- ... (remaining HTML code) ... -->
+
+
+
+  <!-- Add content here -->
+
+  {% block category_detail %}
+    <!-- here we will add detail list  -->
+  {% endblock %}
+
+
+
+
+  <canvas id="canvas"></canvas>
+</body>
+<script src="{% static 'js/category_list.js'%}"></script>
+
+ <!-- scipting of content -->
+<script>
+  function toggleContent(sectionId) {
+    var content = document.getElementById(sectionId);
+    var allContents = document.getElementsByClassName('content');
+
+    for (var i = 0; i < allContents.length; i++) {
+      allContents[i].style.display = 'none';
+    }
+
+    content.style.display = 'block';
+  }
+</script>
+
+</html>

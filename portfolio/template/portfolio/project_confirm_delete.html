@@ -1,0 +1,13 @@
+{% extends "source/nav.html" %}
+
+{% block block_body %}
+<h1>Delete {{project.title }}?</h1>
+
+<form method="post">
+  {% csrf_token %}
+  <br><br><br><br><br><br>
+  <input type="submit" value="Delete">
+
+</form>
+
+{% endblock %}

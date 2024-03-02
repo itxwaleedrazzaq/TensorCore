@@ -1,0 +1,30 @@
+{% extends "source/nav.html" %}
+{% load static %}
+
+{% block head_block%}
+<title>Login</title>
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock%}
+
+{% block block_body %}
+
+<div class="login-container">
+    <form class="login-form" action="{% url 'login' %}" method="POST" >
+        {% csrf_token %}
+      <h1>Welcome Back</h1>
+      <h2>Please login to your account</h2>
+      <div class="input-group">
+        {{form.username}}
+      </div>
+      <div class="input-group">
+        {{form.password}}
+      </div>
+      <button type="submit">Login</button>
+      <div class="bottom-text">
+        <h2>Don't have an account? <a href="{% url 'signup'%}">Sign Up</a></h2>
+        <h2><a href="#">Forgot password?</a></h2>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

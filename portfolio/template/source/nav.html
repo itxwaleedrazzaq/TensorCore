@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/nav.css'%}">
+    {% block head_block%}
+    {% endblock %}
+</head>
+<body>
+    <nav class="nav">
+        <div class="container">
+            <div class="logo">
+                <a href="{% url 'home' %}" style="text-decoration: none; display: inline-block;">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo" style="width: 55px; height: 55px; margin-top: 8px; margin-right: 0px;">
+                </a>
+            </div>
+            <div id="mainListDiv" class="main_list">
+                <ul class="navlinks">
+                    <li><a href="{% url 'portfolio:list_view' %}">Portfolio</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="{% url 'portfolio:contact'%}">Contact</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="">Welcome: {{user.username|upper}}</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <span class="navTrigger">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </div>
+    </nav>
+
+    <!-- About us Section  -->
+    
+      {% block block_body%}
+     
+      {% endblock %}
+
+    
+</body>
+
+<!-- Jquery needed -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="{% static 'js/nav.js' %}"></script>
+
+<!-- Function used to shrink nav bar removing paddings and adding black background -->
+<script>
+    $(window).scroll(function() {
+        if ($(document).scrollTop() > 50) {
+            $('.nav').addClass('affix');
+            console.log("OK");
+        } else {
+            $('.nav').removeClass('affix');
+        }
+    });
+</script>
+</html>

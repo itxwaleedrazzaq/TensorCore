@@ -1,0 +1,17 @@
+{% extends "portfolio/category_list.html" %}
+
+{% block category_detail %}
+    <h1 align="center">{{categories_detail}}</h1>
+    <ol>
+      {% for project in categories_detail.projects.all %}
+        <li><h1>{{project.title}}</h1></li>
+        <li>{{project.abstract}}</li>
+      {% endfor %}
+    </ol>
+    {% if user.is_authenticated %}
+      <form method="POST" action="{% url 'portfolio:create_project' pk=categories_detail.pk %}">
+        {% csrf_token %}
+        <input type="submit" value="Add new">
+      </form>
+    {% endif %}
+{% endblock %}
